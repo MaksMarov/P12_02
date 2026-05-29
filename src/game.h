@@ -10,6 +10,7 @@ typedef struct {
     int speed;
     int running;
     int paused;
+    int tick;
 } GameState;
 
 void init_state(int field[HEIGHT][WIDTH]);
