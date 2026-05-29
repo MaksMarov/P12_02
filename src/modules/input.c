@@ -1,6 +1,6 @@
 #include "game.h"
 
-void handle_input(GameState *game) {
+void handle_input(GameState* game) {
     int ch = getch();
 
     if (ch == ' ')
@@ -10,12 +10,10 @@ void handle_input(GameState *game) {
         game->paused = !game->paused;
 
     else if (ch == 'a' || ch == 'A') {
-        if (game->speed > 20)
-            game->speed -= 10;
+        if (game->speed > 20) game->speed -= 10;
     }
 
     else if (ch == 'z' || ch == 'Z') {
-        if (game->speed < 500)
-            game->speed += 10;
+        if (game->speed < 500) game->speed += 10;
     }
 }

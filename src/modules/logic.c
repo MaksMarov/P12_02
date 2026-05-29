@@ -5,8 +5,7 @@ int count_neighbors(int field[HEIGHT][WIDTH], int y, int x) {
 
     for (int dy = -1; dy <= 1; dy++) {
         for (int dx = -1; dx <= 1; dx++) {
-            if (dy == 0 && dx == 0)
-                continue;
+            if (dy == 0 && dx == 0) continue;
 
             int ny = (y + dy + HEIGHT) % HEIGHT;
             int nx = (x + dx + WIDTH) % WIDTH;

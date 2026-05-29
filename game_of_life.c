@@ -67,12 +67,11 @@ void init_field(int field[HEIGHT][WIDTH]) {
     }
 }
 
-void draw_field(int field[HEIGHT][WIDTH], GameState *game) {
+void draw_field(int field[HEIGHT][WIDTH], GameState* game) {
     clear();
 
     mvaddch(0, 0, '+');
-    for (int x = 1; x <= WIDTH; x++)
-        mvaddch(0, x, '-');
+    for (int x = 1; x <= WIDTH; x++) mvaddch(0, x, '-');
     mvaddch(0, WIDTH + 1, '+');
 
     for (int y = 0; y < HEIGHT; y++) {
@@ -86,15 +85,11 @@ void draw_field(int field[HEIGHT][WIDTH], GameState *game) {
     }
 
     mvaddch(HEIGHT + 1, 0, '+');
-    for (int x = 1; x <= WIDTH; x++)
-        mvaddch(HEIGHT + 1, x, '-');
+    for (int x = 1; x <= WIDTH; x++) mvaddch(HEIGHT + 1, x, '-');
     mvaddch(HEIGHT + 1, WIDTH + 1, '+');
 
-    mvprintw(HEIGHT + 2, 0,
-        "A/Z speed | P pause | SPACE quit | Delay: %d | %s",
-        game->speed,
-        game->paused ? "PAUSED" : "RUNNING"
-    );
+    mvprintw(HEIGHT + 2, 0, "A/Z speed | P pause | SPACE quit | Delay: %d | %s", game->speed,
+             game->paused ? "PAUSED" : "RUNNING");
 
     refresh();
 }

@@ -1,5 +1,6 @@
-#include "game.h"
 #include <stdio.h>
+
+#include "game.h"
 
 void init_field(int field[HEIGHT][WIDTH]) {
     char ch;
