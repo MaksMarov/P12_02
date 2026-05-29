@@ -1,6 +1,6 @@
 #include "game.h"
 
-void draw_field(int field[HEIGHT][WIDTH], GameState* game) {
+void draw(int state[HEIGHT][WIDTH], GameState* game) {
     clear();
 
     mvaddch(0, 0, '+');
@@ -11,7 +11,7 @@ void draw_field(int field[HEIGHT][WIDTH], GameState* game) {
         mvaddch(y + 1, 0, '|');
 
         for (int x = 0; x < WIDTH; x++) {
-            mvaddch(y + 1, x + 1, field[y][x] ? 'o' : ' ');
+            mvaddch(y + 1, x + 1, state[y][x] ? 'o' : ' ');
         }
 
         mvaddch(y + 1, WIDTH + 1, '|');

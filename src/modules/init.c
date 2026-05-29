@@ -2,7 +2,7 @@
 
 #include "game.h"
 
-void init_field(int field[HEIGHT][WIDTH]) {
+void init_state(int state[HEIGHT][WIDTH]) {
     char ch;
 
     for (int y = 0; y < HEIGHT; y++) {
@@ -13,7 +13,7 @@ void init_field(int field[HEIGHT][WIDTH]) {
                 ch = getchar();
             }
 
-            field[y][x] = (ch == 'O');
+            state[y][x] = (ch == 'O');
         }
     }
 }

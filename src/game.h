@@ -12,14 +12,14 @@ typedef struct {
     int paused;
 } GameState;
 
-void init_field(int field[HEIGHT][WIDTH]);
+void init_state(int field[HEIGHT][WIDTH]);
 
-void draw_field(int field[HEIGHT][WIDTH], GameState *game);
+void draw(int field[HEIGHT][WIDTH], GameState *game);
 
-void update_field(int field[HEIGHT][WIDTH]);
+void update(int field[HEIGHT][WIDTH]);
 
 int count_neighbors(int field[HEIGHT][WIDTH], int y, int x);
 
-void handle_input(GameState *game);
+void input(GameState *game);
 
 #endif

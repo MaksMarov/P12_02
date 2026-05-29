@@ -1,6 +1,6 @@
 #include "game.h"
 
-void handle_input(GameState* game) {
+void input(GameState* game) {
     int ch = getch();
 
     if (ch == ' ')

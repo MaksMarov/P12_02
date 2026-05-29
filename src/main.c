@@ -4,10 +4,10 @@
 #include "game.h"
 
 int main(void) {
-    int field[HEIGHT][WIDTH];
+    int state[HEIGHT][WIDTH];
     GameState game = {100, 1, 0};
 
-    init_field(field);
+    init_state(state);
 
     initscr();
     cbreak();
@@ -21,10 +21,10 @@ int main(void) {
     }
 
     while (game.running) {
-        draw_field(field, &game);
-        handle_input(&game);
+        draw(state, &game);
+        input(&game);
 
-        if (!game.paused) update_field(field);
+        if (!game.paused) update(state);
 
         usleep(game.speed * 1000);
     }
