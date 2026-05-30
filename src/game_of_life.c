@@ -1,33 +1,35 @@
 #include <ncurses.h>
 #include <stdio.h>
-#include <unistd.h>
 
 #define WIDTH 80
 #define HEIGHT 25
 
 typedef struct {
+    int state[HEIGHT][WIDTH];
+
     int delay;
     int running;
     int paused;
     int tick;
 } GameState;
 
-void init_state(int field[HEIGHT][WIDTH]);
-void draw(int field[HEIGHT][WIDTH], GameState* game);
-void update(int field[HEIGHT][WIDTH]);
-int count_neighbors(int field[HEIGHT][WIDTH], int y, int x);
+void init_state(int state[HEIGHT][WIDTH]);
+void draw(const GameState* game);
+void update(int state[HEIGHT][WIDTH]);
+int count_neighbors(const int state[HEIGHT][WIDTH], int y, int x);
 void input(GameState* game);
 
 void draw_frame_top(void);
-void draw_field(int state[HEIGHT][WIDTH]);
-void draw_status(GameState* game);
-void draw_controls(GameState* game);
+void draw_field(const int state[HEIGHT][WIDTH]);
+void draw_status(const GameState* game);
+void draw_controls(const GameState* game);
 
 int main(void) {
-    int state[HEIGHT][WIDTH];
-    GameState game = {100, 1, 0, 0};
+    GameState game = {0};
+    game.delay = 100;
+    game.running = 1;
 
-    init_state(state);
+    init_state(game.state);
 
     initscr();
 
@@ -49,13 +51,13 @@ int main(void) {
     }
 
     while (game.running) {
-        draw(state, &game);
+        draw(&game);
         input(&game);
 
-        if (!game.paused) update(state);
+        if (!game.paused) update(game.state);
 
         game.tick++;
-        usleep(game.delay * 1000);
+        napms(game.delay);
     }
 
     endwin();
@@ -69,7 +71,7 @@ void init_state(int state[HEIGHT][WIDTH]) {
         for (int x = 0; x < WIDTH; x++) {
             ch = getchar();
 
-            while (ch != '.' && ch != 'O' && ch != EOF) ch = getchar();
+            while (ch != '.' && ch != 'O' && ch != (char)EOF) ch = getchar();
 
             state[y][x] = (ch == 'O');
         }
@@ -90,7 +92,7 @@ void input(GameState* game) {
     }
 }
 
-int count_neighbors(int state[HEIGHT][WIDTH], int y, int x) {
+int count_neighbors(const int state[HEIGHT][WIDTH], int y, int x) {
     int count = 0;
 
     for (int dy = -1; dy <= 1; dy++) {
@@ -128,11 +130,11 @@ void update(int state[HEIGHT][WIDTH]) {
     }
 }
 
-void draw(int state[HEIGHT][WIDTH], GameState* game) {
+void draw(const GameState* game) {
     clear();
 
     draw_frame_top();
-    draw_field(state);
+    draw_field(game->state);
     draw_status(game);
     draw_controls(game);
 
@@ -153,7 +155,7 @@ void draw_frame_top(void) {
              "| :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |");
 }
 
-void draw_field(int state[HEIGHT][WIDTH]) {
+void draw_field(const int state[HEIGHT][WIDTH]) {
     for (int y = 0; y < HEIGHT; y++) {
         mvprintw(7 + y, 4, "| ::");
 
@@ -179,7 +181,7 @@ void draw_field(int state[HEIGHT][WIDTH]) {
              "|--------------------------------------------------------------------------------------|");
 }
 
-void draw_status(GameState* game) {
+void draw_status(const GameState* game) {
     attron(COLOR_PAIR(3));
 
     mvprintw(7 + HEIGHT + 3, 6, "STATUS");
@@ -227,9 +229,7 @@ void draw_status(GameState* game) {
     }
 }
 
-void draw_controls(GameState* game) {
-    (void)game;
-
+void draw_controls(const GameState* game) {
     mvprintw(7 + HEIGHT + 4, 4,
              "|--------------------------------------------------------------------------------------|");
 
